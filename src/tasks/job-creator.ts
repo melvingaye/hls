@@ -1,4 +1,4 @@
-import { getDb, query } from './db-con';
+import { getDb, query } from '../utils/db-con';
 
 export async function processHabits(name: string, queue: any) {
 	const habits = await getHabits();

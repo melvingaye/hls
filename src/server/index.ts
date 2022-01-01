@@ -3,7 +3,7 @@ import bodyParser from 'koa-parser';
 import cors from 'koa-cors';
 import Router from 'koa-router';
 import convert from 'koa-convert';
-import { startQueueProcessor } from './queue-processor';
+import { startQueueProcessor } from '../tasks/queue-processor';
 import { addReminder } from './add-handler';
 
 (async () => {

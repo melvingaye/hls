@@ -6,8 +6,9 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "npm run build && npm run start",
-		"build": "tsc",
-		"start": "node -r dotenv/config ./dist/index.js"
+		"build": "npm run clean && tsc",
+		"clean": "rd /s /q dist",
+		"start": "node -r dotenv/config ./dist/server/index.js"
 	},
 	"keywords": [],
 	"author": "",

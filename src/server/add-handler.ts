@@ -1,10 +1,10 @@
 import { Context } from 'koa';
-import { getDb, query } from './db-con';
+import { getDb, query } from '../utils/db-con';
 import { escape } from 'mysql2';
 import { Pool } from 'mysql2/promise';
 import * as cron from 'cron-validator';
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
-import { DEFAULT_ERROR_MESSAGE } from './constants';
+import { DEFAULT_ERROR_MESSAGE } from '../utils/constants';
 
 export async function addReminder(ctx: Context) {
 	const twiml = new MessagingResponse();
@@ -26,7 +26,7 @@ export async function addReminder(ctx: Context) {
 				db,
 			);
 
-			twiml.message(`Habit reminder # ${habitId} will be created. Reminders are sent to ${From}.`);
+			twiml.message(`Habit reminder #${habitId} will be created. Reminders are sent to ${From}.`);
 			ctx.body = twiml.toString();
 		} else {
 			twiml.message(DEFAULT_ERROR_MESSAGE);
