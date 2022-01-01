@@ -8,8 +8,8 @@ Experiment with building habits through automation.
 
 #### Local Requirements
 
-1. Run the `create-db.sql` script to get an empty database
-2. Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `populate-db.sql` and then run it
+1. Run the `db/create-db.sql` script to get an empty database
+2. Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `db/populate-db.sql` and then run it
 3. Use [Cronguru](https://crontab.guru/) to format the time entries
 
 #### Twilio Requirements
