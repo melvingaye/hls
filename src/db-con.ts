@@ -7,12 +7,12 @@ export interface DbConfig {
 	password: string;
 }
 
-export function initDb(config?: DbConfig): Pool {
+export function initDb(): Pool {
 	return createPool({
-		database: config?.db || process.env.DATABASE,
-		host: config?.host || process.env.HOST,
-		user: config?.user || process.env.USER,
-		password: config?.password || process.env.PASSWORD,
+		database: process.env.DATABASE,
+		host: process.env.HOST,
+		user: process.env.USER,
+		password: process.env.PASSWORD,
 	});
 }
 

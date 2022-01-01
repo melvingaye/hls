@@ -1,16 +1,14 @@
 import { Twilio } from 'twilio';
 
 export async function habitProcessor(job: any) {
-	console.log(`Details for ${job.data.name}`);
-
-	const message = `Hi ${job.data.name}. Here's a reminder to: ${job.data.message}`;
+	const message = `Hi ya filthy animal. You wanted a reminder for ${job.data.name}. So make sure you do this: ${job.data.message}`;
 	const recipient = `+1${job.data.phoneNumber}`;
 
-	const client = new Twilio(process.env.SID || 'undefined', process.env.AUTH_TOKEN || 'undefined');
+	const client = new Twilio(process.env.SID || '', process.env.AUTH_TOKEN || '');
 	try {
 		const messageResult = await client.messages.create({
 			body: message,
-			from: process.env.SENDING_NUMBER || 'undefined',
+			from: process.env.SENDING_NUMBER,
 			to: recipient,
 		});
 		console.log(messageResult);
