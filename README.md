@@ -11,7 +11,7 @@ Experiment with building habits through automation.
 1. Run the `db/create-db.sql` script to get an empty database
 2. Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `db/populate-db.sql` and then run it
 3. Use [Cronguru](https://crontab.guru/) to format the time entries
-4. Make sure redis is installed and running or provide `bull` a redis config.
+4. Make sure redis is installed on your server or provide `bull` a redis config (bull depends on this).
 
 #### Twilio Requirements
 
