@@ -1,38 +1,36 @@
-import Bull from 'bull';
-import { processHabits } from './job-creator';
-import { habitProcessor } from './habit-processor';
+import Koa from 'koa';
+import bodyParser from 'koa-parser';
+import cors from 'koa-cors';
+import Router from 'koa-router';
+import convert from 'koa-convert';
+import { startQueueProcessor } from './queue-processor';
+import { addReminder } from './add-handler';
 
-const INITIAL_JOB = 'KICK_OFF_INITIAL_JOB_GET_HABITS';
 (async () => {
-	try {
-		const queue = new Bull('Test queue');
-		await queue.empty();
-		await queue.add({ name: INITIAL_JOB }, { repeat: { cron: '0 3 * * *' } }); // should kickoff everyday at 3 am
+	const server = new Koa();
+	const router = new Router({ prefix: '/api' });
 
-		queue.process(async (job) => {
-			// not sure if this is the right way to do this but havent seen any clear documentation of this
-			// or how to use another queue to process jobs from another queue
-			// or could the purpose of this queue be that it runs only once and all it does is add
-			// task to a new queue that will then run all the habit jobs
-			if (job.data?.name === INITIAL_JOB) {
-				return await processHabits(job.data?.name, queue);
-			} else {
-				await habitProcessor(job);
-			}
-		});
-	} catch (error) {
-		console.log(error); // replace these logs with a properly logger
-	}
+	router.post('/', addReminder);
 
-	process.on('uncaughtException', (e) => {
-		console.log(e);
+	server.use(convert(cors()));
+	server.use(convert(bodyParser()));
+	server.use(router.routes());
+
+	await startQueueProcessor();
+
+	server.listen(process.env.PORT, () => {
+		console.info(`Server listening on ${process.env.PORT}`);
 	});
 
-	process.on('unhandledRejection', (e) => {
-		console.log(e);
+	process.on('uncaughtException', (ex: any) => {
+		console.error('Uncaught Exception', ex);
 	});
 
-	process.on('exit', (code) => {
-		console.log(code);
+	process.on('unhandledRejection', (ex: any) => {
+		console.error('Uncaught Rejection', ex);
+	});
+
+	process.on('exit', () => {
+		console.error('Server exited.');
 	});
 })();

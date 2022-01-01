@@ -8,6 +8,7 @@
 		"sourceMap": true,
 		"declaration": true,
 		"esModuleInterop": true,
+		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
@@ -16,5 +17,5 @@
 		"typeRoots": ["node_modules/@types"]
 	},
 	"include": ["src/**/*.ts"],
-	"exclude": ["node_modues"]
+	"exclude": ["/node_modues"]
 }

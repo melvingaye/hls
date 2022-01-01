@@ -1,4 +1,4 @@
-import { initDb, query } from './db-con';
+import { getDb, query } from './db-con';
 
 export async function processHabits(name: string, queue: any) {
 	const habits = await getHabits();
@@ -8,14 +8,14 @@ export async function processHabits(name: string, queue: any) {
 	await addsJobToQueue(jobs, queue);
 
 	const jobsWating = await queue.getJobs(['waiting']);
-	console.log(jobsWating);
 }
 
 async function getHabits() {
-	const con = initDb();
+	const con = getDb();
 	return await query(con, 'SELECT * FROM habit');
 }
 
+// TODO: refactory to handle single job creation and use map to process multiple habits in processHabits
 function createJobs(habits: any[]) {
 	return habits.map((habit) => {
 		return {
@@ -25,6 +25,7 @@ function createJobs(habits: any[]) {
 	});
 }
 
+// TODO: refactory to handle adding single job  and use map to add multiple jobs in processHabits
 async function addsJobToQueue(jobs: any[], queue: any) {
 	const addedJobs = jobs.map((job) => queue.add(job.data, { repeat: { cron: job.cron } }));
 	return await Promise.allSettled(addedJobs);

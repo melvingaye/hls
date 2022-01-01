@@ -7,15 +7,20 @@ export interface DbConfig {
 	password: string;
 }
 
-export function initDb(): Pool {
-	return createPool({
-		database: process.env.DATABASE,
-		host: process.env.HOST,
-		user: process.env.USER,
-		password: process.env.PASSWORD,
-	});
+export function getDb(): Pool {
+	let db: Pool | undefined = undefined;
+	if (!db) {
+		db = createPool({
+			database: process.env.DATABASE,
+			host: process.env.HOST,
+			user: process.env.USER,
+			password: process.env.PASSWORD,
+		});
+	}
+	return db;
 }
 
+// should escape all queries
 export async function query(connection: Pool, query: string): Promise<any> {
 	try {
 		const [rows, _] = await connection.query(query);

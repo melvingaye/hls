@@ -16,6 +16,7 @@ Experiment with building habits through automation.
 #### Twilio Requirements
 
 1. You'll need a twilio account for this to work [follow the steps here](https://www.twilio.com/docs/sms/tutorials/how-to-send-sms-messages-node-js#send-an-sms-message-in-node-via-the-rest-api) to get this part set up
+2. Configure twilio phone number to handle webhook - more details to come
 
 ## Running
 
