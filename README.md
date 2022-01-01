@@ -11,6 +11,7 @@ Experiment with building habits through automation.
 1. Run the `db/create-db.sql` script to get an empty database
 2. Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `db/populate-db.sql` and then run it
 3. Use [Cronguru](https://crontab.guru/) to format the time entries
+4. Make sure redis is installed and running or provide `bull` a redis config.
 
 #### Twilio Requirements
 
@@ -19,6 +20,11 @@ Experiment with building habits through automation.
 ## Running
 
 1. Run `npm run dev` - uses dotenv to preload env variables
+
+### Roadmap
+
+1. Add properly logger
+2. Add a way to create new task in the db through text
 
 ## Notes
 

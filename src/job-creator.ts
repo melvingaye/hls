@@ -1,16 +1,14 @@
 import { initDb, query } from './db-con';
 
 export async function processHabits(name: string, queue: any) {
-	console.log(`Processing: ${name}`);
-
-	console.log('Getting habits from Db');
 	const habits = await getHabits();
-	console.log(`Got ${habits.length} habits from Db`);
 
 	const jobs = createJobs(habits);
-	console.log(`Created ${jobs.length} jobs from habits`);
 
 	await addsJobToQueue(jobs, queue);
+
+	const jobsWating = await queue.getJobs(['waiting']);
+	console.log(jobsWating);
 }
 
 async function getHabits() {
@@ -29,6 +27,5 @@ function createJobs(habits: any[]) {
 
 async function addsJobToQueue(jobs: any[], queue: any) {
 	const addedJobs = jobs.map((job) => queue.add(job.data, { repeat: { cron: job.cron } }));
-	// const addedJobs = jobs.map((job) => queue.add(job.data));
 	return await Promise.allSettled(addedJobs);
 }
