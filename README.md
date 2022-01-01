@@ -8,18 +8,17 @@ Experiment with building habits through automation.
 
 #### Local Requirements
 
-1 - Run the `create-db.sql` script to get an empty database
-2 - Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `populate-db.sql` and then run it
-3 - Use [Cronguru](https://crontab.guru/) to format the time entries
+1. Run the `create-db.sql` script to get an empty database
+2. Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `populate-db.sql` and then run it
+3. Use [Cronguru](https://crontab.guru/) to format the time entries
 
 #### Twilio Requirements
 
-1 - You'll need a twilio account for this to work [follow the steps here](https://www.twilio.com/docs/sms/tutorials/how-to-send-sms-messages-node-js#send-an-sms-message-in-node-via-the-rest-api) to get this part set up
+1. You'll need a twilio account for this to work [follow the steps here](https://www.twilio.com/docs/sms/tutorials/how-to-send-sms-messages-node-js#send-an-sms-message-in-node-via-the-rest-api) to get this part set up
 
 ## Running
 
-1 - Run `tsc` in the root dir
-2 - Run ` node ./dist/index.js`
+1. Run `npm run dev` - uses dotenv to preload env variables
 
 ## Notes
 
