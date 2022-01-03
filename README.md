@@ -4,7 +4,10 @@
 
 Experiment with building habits through automation.
 
-### Set-up
+### Getting Started
+
+-   `docker-compose build`
+-   `docker-compose up -d`
 
 #### Local Requirements
 
