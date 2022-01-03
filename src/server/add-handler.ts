@@ -33,7 +33,8 @@ export async function addReminder(ctx: Context) {
 			ctx.body = twiml.toString();
 		}
 	} catch (error: any) {
-		console.log(error);
+		console.error(error);
+
 		twiml.message(DEFAULT_ERROR_MESSAGE);
 		ctx.body = twiml.toString();
 	}

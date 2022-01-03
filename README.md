@@ -24,7 +24,7 @@ Experiment with building habits through automation.
 
 ### Roadmap
 
-1. Add properly logger
+1. Add proper logging
 2. Add a way to create new task in the db through text
 
 ## Notes

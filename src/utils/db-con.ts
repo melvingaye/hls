@@ -10,11 +10,16 @@ export interface DbConfig {
 export function getDb(): Pool {
 	let db: Pool | undefined = undefined;
 	if (!db) {
+		const database = process.env.MYSQL_DATABASE;
+		const host = process.env.MYSQL_HOST;
+		const user = process.env.MYSQL_USER;
+		const password = process.env.MYSQL_PASSWORD;
+
 		db = createPool({
-			database: process.env.DATABASE,
-			host: process.env.HOST,
-			user: process.env.USER,
-			password: process.env.PASSWORD,
+			database,
+			host,
+			user,
+			password,
 		});
 	}
 	return db;
@@ -26,6 +31,6 @@ export async function query(connection: Pool, query: string): Promise<any> {
 		const [rows, _] = await connection.query(query);
 		return rows;
 	} catch (error: any) {
-		console.log(error);
+		console.error(error);
 	}
 }

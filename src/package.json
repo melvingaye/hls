@@ -5,16 +5,20 @@
 	"main": "./dist/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "npm run build && npm run start",
+		"start": "npm run build && npm run prod",
 		"build": "npm run clean && tsc",
-		"clean": "rd /s /q dist",
-		"start": "node -r dotenv/config ./dist/server/index.js"
+		"clean": "rm -rf dist",
+		"prod": "node ./dist/server/index.js",
+		"dev:start": "npm run dev:build && npm run dev",
+		"dev:build": "npm run dev:clean && tsc",
+		"dev:clean": "rd /s /q dist",
+		"dev": "node -r dotenv/config .dev.env ./dist/server/index.js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@types/bull": "^3.15.7",
+		"@types/ioredis": "^4.28.5",
 		"@types/koa-convert": "^1.2.3",
 		"@types/koa-cors": "0.0.2",
 		"@types/koa-router": "^7.4.4",
@@ -25,9 +29,10 @@
 		"typescript": "^4.5.4"
 	},
 	"dependencies": {
-		"bull": "^4.2.0",
+		"bullmq": "^1.63.0",
 		"cron-validator": "^1.2.1",
 		"dotenv": "^10.0.0",
+		"ioredis": "^4.28.2",
 		"koa": "^2.13.4",
 		"koa-convert": "^2.0.0",
 		"koa-cors": "0.0.16",

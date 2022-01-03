@@ -5,13 +5,17 @@ import Router from 'koa-router';
 import convert from 'koa-convert';
 import { startQueueProcessor } from '../tasks/queue-processor';
 import { addReminder } from './add-handler';
+import { indexHandler } from './index-handler';
 
+// https://cloudnweb.dev/2019/09/building-a-production-ready-node-js-app-with-typescript-and-docker/
+// https://technotrampoline.com/articles/storing-encrypted-env-files-inside-your-git-repo/
+// https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce
 (async () => {
 	const server = new Koa();
 	const router = new Router({ prefix: '/api' });
 
 	router.post('/', addReminder);
-
+	router.get('/', indexHandler);
 	server.use(convert(cors()));
 	server.use(convert(bodyParser()));
 	server.use(router.routes());

@@ -1,28 +1,31 @@
-import Bull from 'bull';
+import { Queue, Worker } from 'bullmq';
 import { processHabits } from './job-creator';
 import { habitProcessor } from './habit-processor';
+import IORedis from 'ioredis';
 
 const INITIAL_JOB = 'KICK_OFF_INITIAL_JOB_GET_HABITS';
 
 export async function startQueueProcessor() {
 	try {
-		const queue = new Bull('Test queue');
-		await queue.empty();
-		await queue.add({ name: INITIAL_JOB }, { repeat: { cron: '0 6 * * *' } }); // should kickoff everyday at 6 am
+		const connection = new IORedis({ host: process.env.REDIS });
+		const queue = new Queue('Habit Queue', { connection });
 
-		queue.process(async (job) => {
-			// not sure if this is the right way to do this but havent seen any clear documentation of this
-			// or how to use another queue to process jobs from another queue
-			// or could the purpose of this queue be that it runs only once and all it does is add
-			// task to a new queue that will then run all the habit jobs
-			// more research here https://github.com/OptimalBits/bull
-			if (job.data?.name === INITIAL_JOB) {
-				return await processHabits(job.data?.name, queue);
-			} else {
-				await habitProcessor(job);
-			}
-		});
+		// kickoff main job every day at 6 am
+		await queue.add(INITIAL_JOB, { name: INITIAL_JOB }, { repeat: { cron: '0 6 * * *' } });
+
+		new Worker(
+			'Habit Queue',
+			async (job) => {
+				// might need to figure out a producer/consumer implementation similar to kafka(?) https://github.com/OptimalBits/bull
+				if (job.name === INITIAL_JOB) {
+					return await processHabits(job.data?.name, queue);
+				} else {
+					await habitProcessor(job);
+				}
+			},
+			{ connection },
+		);
 	} catch (error) {
-		console.log(error); // replace these logs with a properly logger
+		console.error(error); // replace these logs with a proper logger
 	}
 }

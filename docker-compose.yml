@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+    redis:
+        container_name: hls_redis
+        image: redis
+        volumes:
+            - hls-redis:/var/lib/data
+        ports:
+            - "6379:6379"
+    db:
+        container_name: hls_db
+        image: mysql:5.7
+        env_file:
+            - ./src/.prod.env
+        build:
+            context: ./db
+        volumes:
+            - hls-db:/var/lib/mysql
+        ports:
+            - "3306"
+        depends_on:
+            - redis
+        restart: on-failure
+    server:
+        container_name: hls_server
+        env_file:
+            - ./src/.prod.env
+        build: ./src
+        ports:
+            - "3000:3000"
+        depends_on:
+            - db
+            - redis
+        restart: on-failure
+
+volumes:
+    hls-db:
+    hls-redis:
