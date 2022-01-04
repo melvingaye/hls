@@ -25,10 +25,26 @@ Experiment with building habits through automation.
 
 1. Run `npm run dev` - uses dotenv to preload env variables
 
-### Roadmap
+### Chores
 
 1. Add proper logging
-2. Add a way to create new task in the db through text
+2. ~~Add a way to create new task through text~~
+3. Use multi-step build to make images smaller
+4. Way to get all text associated with a particular phone number
+5. Way to remove a habit
+
+## Deployment
+
+1. Get a [DigitalOcean](https://www.digitalocean.com/) account.
+2. Create a project under "Projects"
+3. On the top Nav click on "Create" and a dropdown opens. Select "Droplets"
+4. Select "Marketplace" from the tabs.
+5. Select Docker as your starting image
+6. Fill out the rest of the information
+7. Remove the node_modules and dist dir
+8. Copy the project to your droplet `scp -r hls user@ip:~` [docs](https://man.openbsd.org/scp)
+9. ssh into your droplet. Run `docker-compose build` `docker-compose up [-d]`
+10. Update twilio phone number configuration with the ip of your droplet
 
 ## Notes
 
