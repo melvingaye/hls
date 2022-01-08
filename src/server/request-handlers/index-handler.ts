@@ -1,7 +1,6 @@
 import { Context } from 'koa';
-import { getDb, query, camelCaseRows } from '../../utils/db-con';
+import { getDb, query } from '../../utils/db-con';
 import { camelCase } from '../../utils/camel-case';
-import { Habit } from '../../utils/types';
 import { logger } from '../../utils/logger';
 
 export async function indexHandler(ctx: Context) {

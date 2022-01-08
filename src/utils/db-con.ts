@@ -35,7 +35,7 @@ export function getDb(): Pool {
 	return db;
 }
 
-// should escape all queries
+// should escape all queries consider sqlstring or another package
 export async function query(connection: Pool, query: string): Promise<any> {
 	try {
 		const [rows, _] = await connection.query(query);

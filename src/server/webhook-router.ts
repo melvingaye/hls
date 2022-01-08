@@ -22,26 +22,27 @@ export async function webhookRouter(ctx: Context) {
 
 	try {
 		const { Body, From } = ctx.request.body;
+		const recipient = From.slice(2);
 		const action = getActionType(Body);
 
 		switch (action.toUpperCase()) {
 			case 'ADD':
-				result = await addHandler(Body, From);
+				result = await addHandler(Body, recipient);
 				break;
 			case 'VIEW':
-				result = viewHandler();
+				result = await viewHandler(Body, recipient);
 				break;
 			case 'PAUSE':
-				result = pauseHandler();
+				result = await pauseHandler(Body, recipient);
 				break;
 			case 'REMOVE':
-				result = removeHandler();
+				result = await removeHandler(Body, recipient);
 				break;
 			case 'CHANGE':
-				result = changeHandler();
+				result = await changeHandler(Body, recipient);
 				break;
 			case 'START':
-				result = startHandler();
+				result = await startHandler(Body, recipient);
 				break;
 			default:
 				result = 'Sorry, system failed to process your request.';

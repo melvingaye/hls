@@ -5,6 +5,7 @@ import { ADD_HABIT_ERROR_MESSAGE } from '../../utils/constants';
 import { getDb, query } from '../../utils/db-con';
 import { extractHabitParts, extractPartDetail, extractCron } from '../../utils/message-parsers';
 
+// add step to prevent duplicate entry per phoneNumber
 export async function addHandler(messageBody: any, phoneNumber: string) {
 	const [name, message, when] = extractHabitParts(messageBody);
 
@@ -17,7 +18,7 @@ export async function addHandler(messageBody: any, phoneNumber: string) {
 		const cronFormat = extractCron(whenDetails);
 		const db = getDb();
 
-		await addHabit({ ...cronFormat, recipient: phoneNumber.slice(2), name: nameValue, message: messageValue }, db);
+		await addHabit({ ...cronFormat, recipient: phoneNumber, name: nameValue, message: messageValue }, db);
 
 		return `Created habit reminder for ${nameValue} will be sent to ${phoneNumber}.`;
 	} else {

@@ -11,6 +11,7 @@
 export interface Habit {
 	habitId: number;
 	phoneNumber: string;
+	name: string;
 	message: string;
 	minute: string;
 	hour: string;
