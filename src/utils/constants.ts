@@ -1,4 +1,4 @@
-export const DEFAULT_ERROR_MESSAGE =
+export const ADD_HABIT_ERROR_MESSAGE =
 	'To add a new habit reminder please format your text like this example.' +
 	'\nAdd#Biking.' +
 	'\nMessage#Go ride for 10 minutes.' +

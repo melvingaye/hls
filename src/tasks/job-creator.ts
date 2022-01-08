@@ -1,10 +1,16 @@
+import { Job, Queue } from 'bullmq';
 import { getDb, query } from '../utils/db-con';
+import { logger } from '../utils/logger';
 
-export async function processHabits(name: string, queue: any) {
+export async function processHabits(queue: Queue) {
+	logger.info('Before getting the habits from the db');
 	const habits = await getHabits();
+
+	logger.info(habits, 'Habits from the db');
 	const jobs = habits?.map(createJob);
 
-	const queuedJobs = jobs?.map((job: any) => addJobToQueue(job, queue));
+	logger.info(jobs, 'Jobs from Habits from the db');
+	const queuedJobs = jobs?.map((job: Job) => addJobToQueue(job, queue));
 
 	await Promise.allSettled(queuedJobs);
 }

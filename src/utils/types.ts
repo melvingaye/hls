@@ -9,8 +9,7 @@
  * Will need to figure out a way for potential end users to use this
  */
 export interface Habit {
-	// id: number;
-	// habitJobId: number;
+	habitId: number;
 	phoneNumber: string;
 	message: string;
 	minute: string;
@@ -19,3 +18,15 @@ export interface Habit {
 	month: string;
 	dayOfWeek: string;
 }
+
+/***
+ *             "habit_id": 3,
+            "name": "Sleeping",
+            "message": "Go ride for 10 minutes",
+            "phone_number": "4433268487",
+            "minute": "0",
+            "hour": "14",
+            "day_of_month": "*",
+            "month": "*",
+            "day_of_week": "*"
+ */

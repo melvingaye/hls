@@ -4,37 +4,39 @@ import cors from 'koa-cors';
 import Router from 'koa-router';
 import convert from 'koa-convert';
 import { startQueueProcessor } from '../tasks/queue-processor';
-import { addReminder } from './add-handler';
-import { indexHandler } from './index-handler';
+import { webhookRouter } from './webhook-router';
+import { indexHandler } from './request-handlers/index-handler';
+import { logger } from '../utils/logger';
 
-// https://cloudnweb.dev/2019/09/building-a-production-ready-node-js-app-with-typescript-and-docker/
-// https://technotrampoline.com/articles/storing-encrypted-env-files-inside-your-git-repo/
-// https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce
 (async () => {
+	logger.info('Initializing the server.');
+
 	const server = new Koa();
 	const router = new Router({ prefix: '/api' });
 
-	router.post('/', addReminder);
+	router.post('/', webhookRouter);
 	router.get('/', indexHandler);
+
 	server.use(convert(cors()));
 	server.use(convert(bodyParser()));
 	server.use(router.routes());
 
+	logger.info('Initializing the queue.');
 	await startQueueProcessor();
 
 	server.listen(process.env.PORT, () => {
-		console.info(`Server listening on ${process.env.PORT}`);
+		logger.info(`Server listening on ${process.env.PORT}`);
 	});
 
-	process.on('uncaughtException', (ex: any) => {
-		console.error('Uncaught Exception', ex);
+	process.on('uncaughtException', (ex: Error) => {
+		logger.error(ex, 'Uncaught Exception');
 	});
 
-	process.on('unhandledRejection', (ex: any) => {
-		console.error('Uncaught Rejection', ex);
+	process.on('unhandledRejection', (ex: Error) => {
+		logger.error(ex, 'Uncaught Rejection');
 	});
 
 	process.on('exit', () => {
-		console.error('Server exited.');
+		logger.error('Server exited.');
 	});
 })();
