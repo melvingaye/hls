@@ -1,0 +1,15 @@
+{
+	"extends": "@tsconfig/recommended/tsconfig.json",
+	"compilerOptions": {
+		"preserveConstEnums": true,
+		"declaration": true,
+		"allowSyntheticDefaultImports": true,
+		"module": "commonjs",
+		"sourceMap": true,
+		"outDir": "./dist",
+		"baseUrl": "./src",
+		"typeRoots": ["node_modules/@types"]
+	},
+	"include": ["./src"],
+	"exclude": ["/node_modues", "./dist"]
+}

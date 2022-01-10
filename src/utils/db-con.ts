@@ -10,7 +10,7 @@ export interface DbConfig {
 }
 
 export function getDb(): Pool {
-	let db: Pool | undefined = undefined;
+	let db: Pool | undefined;
 
 	logger.info('Getting db object.');
 
@@ -19,6 +19,7 @@ export function getDb(): Pool {
 		const host = process.env.MYSQL_HOST;
 		const user = process.env.MYSQL_USER;
 		const password = process.env.MYSQL_PASSWORD;
+		const port = +!process.env.MYSQL_PORT; // dont do this!!! replace with env-var
 
 		logger.info('Validate db creds');
 		logger.info({ database, host, user, password });
@@ -28,6 +29,7 @@ export function getDb(): Pool {
 			host,
 			user,
 			password,
+			port,
 		});
 	}
 
@@ -42,6 +44,7 @@ export async function query(connection: Pool, query: string): Promise<any> {
 		return rows;
 	} catch (error: any) {
 		logger.error(error, 'query execution failed.');
+		throw new Error('Failed to execute query');
 	}
 }
 

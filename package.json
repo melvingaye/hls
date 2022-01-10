@@ -2,22 +2,22 @@
 	"name": "hls",
 	"version": "1.0.0",
 	"description": "",
-	"main": "./dist/index.js",
+	"main": "src/dist/index.js",
+	"types": "src/dist/index.d.ts",
+	"files": [
+		"/src/dist"
+	],
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "npm run build && npm run prod",
+		"start": "npm run build && npm run init",
+		"init": "node ./dist/server/index.js",
 		"build": "npm run clean && tsc",
-		"clean": "rm -rf dist",
-		"prod": "node ./dist/server/index.js",
-		"dev:start": "npm run dev:build && npm run dev",
-		"dev:build": "npm run dev:clean && tsc",
-		"dev:clean": "rd /s /q dist",
-		"dev": "node -r dotenv/config .dev.env ./dist/server/index.js"
+		"clean": "rm -rf dist"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"@tsconfig/recommended": "^1.0.1",
 		"@types/ioredis": "^4.28.5",
 		"@types/koa-convert": "^1.2.3",
 		"@types/koa-cors": "0.0.2",

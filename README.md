@@ -2,36 +2,40 @@
 
 ## Purpose
 
-Experiment with building habits through automation.
+Experiment with building habits through automated text messages. The idea is that people
+have their phones with them all day and phones are like personal confidants. So getting
+a reminder from something a person is already so intimate with will improve the odds of developing
+the desired about they are getting reminders about.
 
-### Getting Started
+## Getting Started
 
--   `docker-compose build`
--   `docker-compose up -d`
-
-#### Local Requirements
-
-1. Run the `db/create-db.sql` script to get an empty database
-2. Replace `<RECIPIENT_PHONE_NUMBER>` with your phone number in `db/populate-db.sql` and then run it
-3. Use [Cronguru](https://crontab.guru/) to format the time entries
-4. Make sure redis is installed on your server or provide `bull` a redis config (bull depends on this).
-
-#### Twilio Requirements
+### Twilio Requirements
 
 1. You'll need a twilio account for this to work [follow the steps here](https://www.twilio.com/docs/sms/tutorials/how-to-send-sms-messages-node-js#send-an-sms-message-in-node-via-the-rest-api) to get this part set up
-2. Configure twilio phone number to handle webhook - more details to come
+2. Configure twilio phone number webook by adding an endpoint (ngrok can be used for local testing)
 
-## Running
+### Development
 
-1. Run `npm run dev` - uses dotenv to preload env variables
+1. Fork/pull the repo and run `npm i` in the root dir (all commands are ran in root dir)
+2. Start Docker (if you don't have it install it)
+3. Run `docker-compose -f .\docker-compose.dev.yml build`
+4. Run `docker-compose -f .\docker-compose.dev.yml up -d`
+5. Use vscode Run and debug menu to run "Launch Server API"
 
-### Chores
+### Testing
 
-1. Add proper logging
+1. Add your first habit using Postman or insomnia
+    - request body should look like this
+      `{"Body": "Add#Test Habit. Message#Testing. When#*/1 * * * *.", "From": "+1<YOUR_PHONE_NUMBER>"}`
+    - Use [Cronguru](https://crontab.guru/) to format the time entries and create
+
+## Future Work
+
+1. ~~Add proper logging~~
 2. ~~Add a way to create new task through text~~
 3. Use multi-step build to make images smaller
-4. Way to get all text associated with a particular phone number
-5. Way to remove a habit
+4. Add feature to get all habits associated with a particular phone number
+5. Add feature to remove a habit
 
 ## Deployment
 
@@ -41,11 +45,7 @@ Experiment with building habits through automation.
 4. Select "Marketplace" from the tabs.
 5. Select Docker as your starting image
 6. Fill out the rest of the information
-7. Remove the node_modules and dist dir
-8. Copy the project to your droplet `scp -r hls user@ip:~` [docs](https://man.openbsd.org/scp)
+7. Remove the `node_modules`, `dist`, and `.vscode` dir
+8. Copy the project to your droplet `scp -r hls <DROPLET_USER>@<DROPLET_IP>:~` [docs](https://man.openbsd.org/scp)
 9. ssh into your droplet. Run `docker-compose build` `docker-compose up [-d]`
 10. Update twilio phone number configuration with the ip of your droplet
-
-## Notes
-
-This was mostly a poc and there are a lot of things to do to make it more robust.
