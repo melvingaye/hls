@@ -12,7 +12,8 @@
 			"program": "${workspaceFolder}/src/server/index.ts",
 			"envFile": "${workspaceFolder}/.dev.env",
 			"preLaunchTask": "tsc: build",
-			"outFiles": ["${workspaceFolder}/dist/**/*.js"]
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"outputCapture": "std"
 		}
 	]
 }

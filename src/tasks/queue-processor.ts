@@ -14,7 +14,7 @@ export async function startQueueProcessor() {
 		});
 
 		logger.info('Creating Habit Queue');
-		const myQueueScheduler = new QueueScheduler('Habit Queue', { connection });
+		new QueueScheduler('Habit Queue', { connection, maxStalledCount: 0 });
 		const queue = new Queue('Habit Queue', { connection });
 
 		// kickoff main job every day at 6 am

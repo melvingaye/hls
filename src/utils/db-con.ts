@@ -1,6 +1,7 @@
 import { createPool, Pool } from 'mysql2/promise';
 import { logger } from './logger';
 import { camelCase } from './camel-case';
+import * as env from 'env-var';
 
 export interface DbConfig {
 	db: string;
@@ -15,14 +16,13 @@ export function getDb(): Pool {
 	logger.info('Getting db object.');
 
 	if (!db) {
-		const database = process.env.MYSQL_DATABASE;
-		const host = process.env.MYSQL_HOST;
-		const user = process.env.MYSQL_USER;
-		const password = process.env.MYSQL_PASSWORD;
-		const port = +!process.env.MYSQL_PORT; // dont do this!!! replace with env-var
+		const database = env.get('MYSQL_DATABASE').required().asString();
+		const host = env.get('MYSQL_HOST').required().asString();
+		const user = env.get('MYSQL_USER').required().asString();
+		const password = env.get('MYSQL_PASSWORD').required().asString();
+		const port = env.get('MYSQL_PORT').required().asPortNumber(); // dont do this!!! replace with env-var
 
-		logger.info('Validate db creds');
-		logger.info({ database, host, user, password });
+		logger.info('Got creds.');
 
 		db = createPool({
 			database,
@@ -33,7 +33,7 @@ export function getDb(): Pool {
 		});
 	}
 
-	logger.info(db);
+	logger.info('Returning the db.');
 	return db;
 }
 

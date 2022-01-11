@@ -32,6 +32,7 @@
 		"bullmq": "^1.63.0",
 		"cron-validator": "^1.2.1",
 		"dotenv": "^10.0.0",
+		"env-var": "^7.1.1",
 		"ioredis": "^4.28.2",
 		"koa": "^2.13.4",
 		"koa-convert": "^2.0.0",
