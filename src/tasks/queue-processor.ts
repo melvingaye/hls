@@ -35,6 +35,6 @@ export async function startQueueProcessor() {
 			{ connection },
 		);
 	} catch (error) {
-		logger.error(error, 'Error starting the main queue.'); // replace these logs with a proper logger
+		logger.error(error, 'Error starting the main queue.');
 	}
 }
