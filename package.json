@@ -8,6 +8,7 @@
 		"/src/dist"
 	],
 	"scripts": {
+		"prepare": "husky install",
 		"start": "npm run build && npm run init",
 		"init": "node ./dist/server/index.js",
 		"build": "npm run clean && tsc",
