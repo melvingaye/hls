@@ -2,11 +2,25 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			// starts koa server and depends on docker running
 			"type": "typescript",
 			"tsconfig": "tsconfig.json",
 			"problemMatcher": ["$tsc"],
 			"group": "build",
-			"label": "tsc: build"
+			"label": "tsc: build",
+			"dependsOn": ["docker: compose"]
+		},
+		{
+			// Starts docker
+			"type": "docker-compose",
+			"dockerCompose": {
+				"up": {
+					"detached": true,
+					"build": true
+				},
+				"files": ["${workspaceFolder}/docker-compose.dev.yml"]
+			},
+			"label": "docker: compose"
 		}
 	]
 }

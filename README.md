@@ -9,25 +9,26 @@ the desired about they are getting reminders about.
 
 ## Getting Started
 
-### Twilio Requirements
+#### Requirements
 
-1. You'll need a twilio account for this to work [follow the steps here](https://www.twilio.com/docs/sms/tutorials/how-to-send-sms-messages-node-js#send-an-sms-message-in-node-via-the-rest-api) to get this part set up
-2. Configure twilio phone number webook by adding an endpoint (ngrok can be used for local testing)
+1. [Twilio account](https://www.twilio.com/try-twilio)
+    - [Ngrok](https://ngrok.com/) for tunneling to localhost - Twilio phone number uses webhooks
+    - [Example SMS code](https://www.twilio.com/docs/sms/tutorials/how-to-send-sms-messages-node-js#send-an-sms-message-in-node-via-the-rest-api)
+2. [Docker Installed](https://www.docker.com/get-started)
 
-### Development
+#### Development
 
-1. Fork/pull the repo and run `npm i` in the root dir (all commands are ran in root dir)
-2. Start Docker (if you don't have it install it)
-3. Run `docker-compose -f .\docker-compose.dev.yml build`
-4. Run `docker-compose -f .\docker-compose.dev.yml up -d`
-5. Use vscode Run and debug menu to run "Launch Server API"
+1. Clone the repo
+2. Change into the directoy, `cd hls`
+3. Run `npm i` to install dependencies
+4. Use vscode Run and debug menu to run "Server"
 
-### Testing
+#### Testing
 
 1. Add your first habit using Postman or insomnia
     - request body should look like this
       `{"Body": "Add#Test Habit. Message#Testing. When#*/1 * * * *.", "From": "+1<YOUR_PHONE_NUMBER>"}`
-    - Use [Cronguru](https://crontab.guru/) to format the time entries and create
+    - Use [Cronguru](https://crontab.guru/) to format the time entries
 
 ## Future Work
 

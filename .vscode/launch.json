@@ -7,8 +7,14 @@
 		{
 			"type": "pwa-node",
 			"request": "launch",
-			"name": "Launch Server API",
-			"skipFiles": ["<node_internals>/**"],
+			"name": "Server",
+			"skipFiles": [
+				"<node_internals>/**",
+				"node_modules/**/*.js",
+				"lib/**/*.js",
+				"async_hooks.js",
+				"inspector_async_hook.js"
+			],
 			"program": "${workspaceFolder}/src/server/index.ts",
 			"envFile": "${workspaceFolder}/.dev.env",
 			"preLaunchTask": "tsc: build",

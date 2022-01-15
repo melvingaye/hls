@@ -20,7 +20,7 @@ export function getDb(): Pool {
 		const host = env.get('MYSQL_HOST').required().asString();
 		const user = env.get('MYSQL_USER').required().asString();
 		const password = env.get('MYSQL_PASSWORD').required().asString();
-		const port = env.get('MYSQL_PORT').required().asPortNumber(); // dont do this!!! replace with env-var
+		const port = env.get('MYSQL_PORT').required().asPortNumber();
 
 		logger.info('Got creds.');
 
@@ -33,14 +33,14 @@ export function getDb(): Pool {
 		});
 	}
 
-	logger.info('Returning the db.');
+	logger.info('Returning the db here again.');
 	return db;
 }
 
 // should escape all queries consider sqlstring or another package
 export async function query(connection: Pool, query: string): Promise<any> {
 	try {
-		const [rows, _] = await connection.query(query);
+		const [rows] = await connection.query(query);
 		return rows;
 	} catch (error: any) {
 		logger.error(error, 'query execution failed.');

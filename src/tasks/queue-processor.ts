@@ -19,9 +19,7 @@ export async function startQueueProcessor() {
 
 		// kickoff main job every day at 6 am
 		logger.info('Adding first job to Habit Queue');
-		//await queue.add(INITIAL_JOB, { name: INITIAL_JOB }, { repeat: { cron: '0 6 * * *' } });
-
-		await queue.add(INITIAL_JOB, { name: INITIAL_JOB });
+		await queue.add(INITIAL_JOB, { name: INITIAL_JOB }, { repeat: { cron: '0 6 * * *' } });
 
 		new Worker(
 			'Habit Queue',
