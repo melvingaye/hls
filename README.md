@@ -21,7 +21,7 @@ the desired about they are getting reminders about.
 1. Clone the repo
 2. Change into the directoy, `cd hls`
 3. Run `npm i` to install dependencies
-4. Use vscode Run and debug menu to run "Server"
+4. Use vscode Run and debug menu to run "Servr"
 
 #### Testing
 
