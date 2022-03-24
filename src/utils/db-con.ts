@@ -43,7 +43,7 @@ export async function query(connection: Pool, query: string): Promise<any> {
 		const [rows] = await connection.query(query);
 		return rows;
 	} catch (error: any) {
-		logger.error(error, 'query execution failed.');
+		logger.error(error, 'query execution failed');
 		throw new Error('Failed to execute query');
 	}
 }

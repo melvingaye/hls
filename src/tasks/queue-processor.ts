@@ -13,16 +13,20 @@ export async function startQueueProcessor() {
 			host: process.env.REDIS,
 		});
 
-		logger.info('Creating Habit Queue');
-		new QueueScheduler('Habit Queue', { connection, maxStalledCount: 0 });
-		const queue = new Queue('Habit Queue', { connection });
+		// flush redis on server restart
+		await connection.flushall();
 
-		// kickoff main job every day at 6 am
-		logger.info('Adding first job to Habit Queue');
-		await queue.add(INITIAL_JOB, { name: INITIAL_JOB }, { repeat: { cron: '0 6 * * *' } });
+		logger.info('Creating Habit Queue');
+		new QueueScheduler('Habits', { connection, maxStalledCount: 0 });
+		const queue = new Queue('Habits', { connection });
+
+		// kickoff main job every day at 1 am
+		logger.info('Adding db jobs to Habits Queue');
+		await queue.add(INITIAL_JOB, { name: INITIAL_JOB });
+		//await queue.add(INITIAL_JOB, { name: INITIAL_JOB }, { repeat: { cron: '0 1 * * *' } });
 
 		new Worker(
-			'Habit Queue',
+			'Habits',
 			async (job) => {
 				if (job.name === INITIAL_JOB) {
 					logger.info('Processing the first job to Habit Queue');

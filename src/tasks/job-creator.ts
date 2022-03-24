@@ -29,6 +29,8 @@ function createJob(habit: any) {
 	};
 }
 
-async function addJobToQueue(job: any, queue: any) {
-	return await queue.add(job.name, job.data, { repeat: { cron: job.cron } });
+async function addJobToQueue(job: any, queue: Queue) {
+	return await queue.add(job.name, job.data, {
+		repeat: { cron: job.cron },
+	});
 }
