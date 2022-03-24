@@ -50,19 +50,19 @@ export async function query(connection: Pool, query: string): Promise<any> {
 
 export function camelCaseRows<T>(rows: any): T[] {
 	return rows?.map((entry: any) => camelCaseObjectProperties(entry)) as T[];
-}
 
-function camelCaseObjectProperties(object: any) {
-	const copy = (obj: any) => Object.assign({}, obj);
+	function camelCaseObjectProperties(object: any) {
+		const copy = (obj: any) => Object.assign({}, obj);
 
-	const copiedObject = copy(object);
-	for (const [key, value] of Object.entries(copiedObject)) {
-		copiedObject[camelCase(key)] = value;
+		const copiedObject = copy(object);
+		for (const [key, value] of Object.entries(copiedObject)) {
+			copiedObject[camelCase(key)] = value;
 
-		if (camelCase(key) !== key) {
-			delete copiedObject[key];
+			if (camelCase(key) !== key) {
+				delete copiedObject[key];
+			}
 		}
-	}
 
-	return copiedObject;
+		return copiedObject;
+	}
 }
